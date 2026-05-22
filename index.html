@@ -351,15 +351,63 @@
     margin: 0 auto 30px;
   }
 
-  /* --- DUAL GRID CHECKOUT ENGINE (NOW MOVED INSIDE THE OVERLAY MODAL) --- */
-  .app-interface-grid {
-    display: grid;
-    grid-template-columns: 1.1fr 0.9fr;
-    gap: 40px;
-    align-items: start;
+  /* --- POP-UP MODAL OVERLAY --- */
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    padding: 20px;
+    overflow-y: auto;
+  }
+  .modal-wrapper {
+    width: 100%;
+    max-width: 650px; /* Highly optimized for seamless single-column step card flow */
+    margin: auto;
+    position: relative;
+    animation: modalScaleUp 0.4s cubic-bezier(0.165, 0.84, 0.44, 1) both;
+  }
+  @keyframes modalScaleUp {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  /* --- MODAL CLOSE BUTTON --- */
+  .modal-close-btn {
+    position: absolute;
+    top: 20px;
+    right: 25px;
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 2.2rem;
+    font-weight: 300;
+    cursor: pointer;
+    z-index: 100;
+    transition: color 0.3s;
+  }
+  .modal-close-btn:hover {
+    color: #fff;
+  }
+
+  /* --- MODAL CARDS --- */
+  .enrollment-modal-container {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 45px 35px 35px 35px;
+    box-shadow: 0 0 50px rgba(247, 201, 72, 0.15);
   }
   
-  /* Plan Cards */
+  /* Plan Cards styling */
   .plans-vertical {
     display: flex;
     flex-direction: column;
@@ -460,61 +508,7 @@
     box-shadow: 0 0 15px rgba(247, 201, 72, 0.1);
   }
 
-  /* --- POP-UP MODAL OVERLAY --- */
-  .modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.85);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    z-index: 9999;
-    padding: 20px;
-    overflow-y: auto;
-  }
-  .modal-wrapper {
-    width: 100%;
-    max-width: 960px;
-    margin: auto;
-    position: relative;
-    animation: modalScaleUp 0.4s cubic-bezier(0.165, 0.84, 0.44, 1) both;
-  }
-  @keyframes modalScaleUp {
-    from { opacity: 0; transform: scale(0.95); }
-    to { opacity: 1; transform: scale(1); }
-  }
-
-  /* --- MODAL CLOSE BUTTON --- */
-  .modal-close-btn {
-    position: absolute;
-    top: 20px;
-    right: 25px;
-    background: none;
-    border: none;
-    color: var(--text-muted);
-    font-size: 2.2rem;
-    font-weight: 300;
-    cursor: pointer;
-    z-index: 100;
-    transition: color 0.3s;
-  }
-  .modal-close-btn:hover {
-    color: #fff;
-  }
-
-  /* --- MODAL CARDS --- */
-  .enrollment-modal-container {
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    padding: 45px 35px 35px 35px;
-    box-shadow: 0 0 50px rgba(247, 201, 72, 0.15);
-  }
+  /* --- INTERACTIVE SUCCESS SCREEN VIEW (OPTIMIZED VERTICAL STACK) --- */
   .checkout-success-container {
     background: var(--bg-card);
     border: 1px solid var(--border-color);
@@ -524,26 +518,27 @@
   }
   .success-header-block {
     background: linear-gradient(135deg, #18150f 0%, #0d0d0d 100%);
-    padding: 30px;
+    padding: 35px 25px;
     border-bottom: 1px solid var(--border-color);
     text-align: center;
   }
-  .success-layout-grid {
-    display: grid;
-    grid-template-columns: 1.1fr 0.9fr;
-    gap: 30px;
+  .success-layout-stacked {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
     padding: 30px;
   }
   .receipt-box {
     background: #181818;
     border-radius: 6px;
     border: 1px solid var(--border-color);
-    padding: 20px;
+    padding: 24px;
   }
   .receipt-row {
     display: flex;
     justify-content: space-between;
-    padding: 12px 0;
+    align-items: center;
+    padding: 14px 0;
     border-bottom: 1px solid var(--border-color);
     font-size: 0.85rem;
   }
@@ -551,38 +546,112 @@
     border-bottom: none;
     padding-bottom: 0;
   }
-  .receipt-label { color: var(--text-muted); }
-  .receipt-val { color: #fff; font-weight: 700; }
+  .receipt-label { color: var(--text-muted); text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.5px; }
+  .receipt-val { color: #fff; font-weight: 700; text-align: right; }
   
-  .pay-option-stack {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-  }
-  .pay-method-card {
+  /* Payment Method Toggle */
+  .payment-toggle-container {
     background: #181818;
     border: 1px solid var(--border-color);
     border-radius: 6px;
-    padding: 18px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
   }
-  .pay-method-title {
-    color: var(--primary);
-    font-weight: 800;
-    font-size: 0.9rem;
-    margin-bottom: 10px;
+  .payment-tabs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    background: #121212;
+    padding: 6px;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+  }
+  .payment-tab-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    padding: 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 0.8rem;
+    text-transform: uppercase;
     letter-spacing: 1px;
+    font-family: 'Montserrat', sans-serif;
+    transition: all 0.3s;
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
   }
-  .pay-method-data {
+  .payment-tab-btn.active {
+    background: var(--primary);
+    color: #000;
+  }
+
+  /* Payment Display Panels */
+  .payment-details-panel {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    text-align: center;
+    animation: fadeInTab 0.3s ease both;
+  }
+  .payment-details-panel.active {
+    display: flex;
+  }
+  @keyframes fadeInTab {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  .payment-info-box {
+    width: 100%;
+    text-align: left;
+    background: #121212;
+    padding: 14px 18px;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+  }
+  .payment-info-row {
     font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-bottom: 8px;
     display: flex;
     justify-content: space-between;
-    color: var(--text-muted);
-    margin-bottom: 6px;
   }
-  .pay-method-data span { color: #fff; font-weight: 600; }
+  .payment-info-row:last-child {
+    margin-bottom: 0;
+  }
+  .payment-info-row span {
+    color: #fff;
+    font-weight: 700;
+  }
+
+  /* QR Code Container Styles - ENLARGED to 280px for high-scannability on all devices */
+  .qr-code-placeholder {
+    width: 280px;
+    height: 280px;
+    max-width: 100%;
+    background: #ffffff;
+    border-radius: 8px;
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    overflow: hidden;
+    border: 2px solid var(--primary);
+  }
+  .qr-code-placeholder img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+  }
 
   /* --- FOOTER & TRUST --- */
   footer {
@@ -598,7 +667,7 @@
 
   /* --- RESPONSIVENESS --- */
   @media(max-width: 900px) {
-    .comparison-grid, .blueprint-grid, .hero-grid, .app-interface-grid, .success-layout-grid {
+    .comparison-grid, .blueprint-grid, .hero-grid {
       grid-template-columns: 1fr;
     }
     .proof-timeline-rows {
@@ -624,7 +693,7 @@
     .stats-bar { grid-template-columns: 1fr; text-align: center; }
     .btn-primary { width: 100%; }
     .success-header-block { padding: 20px; }
-    .success-layout-grid { padding: 20px; }
+    .success-layout-stacked { padding: 20px; }
     .enrollment-modal-container { padding: 45px 20px 20px 20px; }
   }
 </style>
@@ -839,135 +908,172 @@
     <div class="modal-wrapper">
       <button class="modal-close-btn" onclick="closeModal()">&times;</button>
       
-      <!-- STATE 1: SELECTION & CLIENT DATA FORM -->
-      <div class="enrollment-modal-container" id="modal-enroll-view">
-        <div class="app-interface-grid">
-          <!-- Left Column: Plan Selectors & Value Proposition -->
-          <div>
-            <h2 class="bebas uppercase" style="font-size:2.8rem; margin-bottom:15px; line-height: 1.1;">SELECT YOUR <span class="gold-text">PLAN</span></h2>
-            <p style="color: var(--text-muted); font-size:0.85rem; margin-bottom:30px;">Select your timeframe below. All options include the custom nutrition layouts, workout guides, supplements strategies, and personal 24/7 direct coach access.</p>
-            
-            <div class="plans-vertical">
-              <!-- Plan Card 1 -->
-              <div class="plan-row active" data-plan="1 Month Plan" data-price="2000">
-                <div class="plan-main-details">
-                  <div class="plan-title-txt">1-Month Transformation <span class="plan-badge-inline">Popular</span></div>
-                  <div class="plan-desc" style="font-size:0.8rem; color:var(--text-muted);">Get fully initiated into macro-tracking and custom workout pacing + 15 Days Free.</div>
-                  <div class="plan-features-mini">✓ Home/Gym Program ✓ Daily Q&A Support ✓ Nutrition Adjustments</div>
-                </div>
-                <div class="plan-price-tag bebas">₱2,000</div>
-              </div>
-
-              <!-- Plan Card 2 -->
-              <div class="plan-row" data-plan="2 Months Plan" data-price="3000">
-                <div class="plan-main-details">
-                  <div class="plan-title-txt">2-Month Momentum Plan</div>
-                  <div class="plan-desc" style="font-size:0.8rem; color:var(--text-muted);">Secure significant fat-burning parameters and core strength progression + 15 Days Free.</div>
-                  <div class="plan-features-mini">✓ Weekly Metrics Check ✓ Advanced Supplement Guide ✓ Form Analysis</div>
-                </div>
-                <div class="plan-price-tag bebas">₱3,000</div>
-              </div>
-
-              <!-- Plan Card 3 -->
-              <div class="plan-row" data-plan="5 Months Plan" data-price="4000">
-                <div class="plan-main-details">
-                  <div class="plan-title-txt">5-Month Elite Overhaul <span class="plan-badge-inline" style="background:#fff; color:#000;">Elite Value</span></div>
-                  <div class="plan-desc" style="font-size:0.8rem; color:var(--text-muted);">The gold standard physical restructuring program. Total body recomposition + 15 Days Free.</div>
-                  <div class="plan-features-mini">✓ Direct Premium Support ✓ Priority Video Audits ✓ Strategic Peak Week</div>
-                </div>
-                <div class="plan-price-tag bebas">₱4,000</div>
-              </div>
+      <!-- STEP 1: PLAN SELECTION VIEW -->
+      <div class="enrollment-modal-container" id="modal-plan-view">
+        <h2 class="bebas uppercase" style="font-size:2.8rem; margin-bottom:10px; line-height: 1.1; text-align: center;">SELECT YOUR <span class="gold-text">PLAN</span></h2>
+        <p style="color: var(--text-muted); font-size:0.85rem; margin-bottom:25px; text-align: center; max-width: 500px; margin-left: auto; margin-right: auto;">Select your preferred package timeframe below. All plans include full premium customization and direct support.</p>
+        
+        <div class="plans-vertical">
+          <!-- Plan Card 1 -->
+          <div class="plan-row active" data-plan="1 Month Plan" data-price="2000">
+            <div class="plan-main-details">
+              <div class="plan-title-txt">1-Month Transformation <span class="plan-badge-inline">Popular</span></div>
+              <div class="plan-desc" style="font-size:0.8rem; color:var(--text-muted);">Get fully initiated into macro-tracking and custom workout pacing + 15 Days Free.</div>
+              <div class="plan-features-mini">✓ Home/Gym Program ✓ Daily Q&A Support ✓ Nutrition Adjustments</div>
             </div>
+            <div class="plan-price-tag bebas">₱2,000</div>
           </div>
 
-          <!-- Right Column: Registration Form -->
-          <div class="interactive-form-box">
-            <h3 class="bebas uppercase" style="font-size:1.8rem; margin-bottom:5px; color:#fff;">ENTER YOUR DATA</h3>
-            <p style="color:var(--text-muted); font-size:0.8rem; margin-bottom:30px;">We need these to configure your profile and automatically send your plans.</p>
-            
-            <form id="booking-form" onsubmit="processBooking(event)">
-              <div class="form-group">
-                <label>Your Full Name</label>
-                <input type="text" id="reg-name" placeholder="Juan Dela Cruz" required>
-              </div>
-              <div class="form-group">
-                <label>Active Email Address</label>
-                <input type="email" id="reg-email" placeholder="juan@gmail.com" required>
-              </div>
-              <div class="form-group">
-                <label>Facebook Profile Link (For Instant Communication)</label>
-                <input type="url" id="reg-fb" placeholder="https://facebook.com/username" required>
-              </div>
+          <!-- Plan Card 2 -->
+          <div class="plan-row" data-plan="2 Months Plan" data-price="3000">
+            <div class="plan-main-details">
+              <div class="plan-title-txt">2-Month Momentum Plan</div>
+              <div class="plan-desc" style="font-size:0.8rem; color:var(--text-muted);">Secure significant fat-burning parameters and core strength progression + 15 Days Free.</div>
+              <div class="plan-features-mini">✓ Weekly Metrics Check ✓ Advanced Supplement Guide ✓ Form Analysis</div>
+            </div>
+            <div class="plan-price-tag bebas">₱3,000</div>
+          </div>
 
-              <button type="submit" id="submit-btn" class="btn-primary bebas" style="width:100%; margin-top: 10px;">
-                SECURE SPOT & CONTINUE &rarr;
-              </button>
-            </form>
+          <!-- Plan Card 3 -->
+          <div class="plan-row" data-plan="5 Months Plan" data-price="4000">
+            <div class="plan-main-details">
+              <div class="plan-title-txt">5-Month Elite Overhaul <span class="plan-badge-inline" style="background:#fff; color:#000;">Elite Value</span></div>
+              <div class="plan-desc" style="font-size:0.8rem; color:var(--text-muted);">The gold standard physical restructuring program. Total body recomposition + 15 Days Free.</div>
+              <div class="plan-features-mini">✓ Direct Premium Support ✓ Priority Video Audits ✓ Strategic Peak Week</div>
+            </div>
+            <div class="plan-price-tag bebas">₱4,000</div>
           </div>
         </div>
+
+        <button onclick="goToDetailsStep()" class="btn-primary bebas" style="width:100%; margin-top: 25px;">
+          PROCEED TO PAYMENT &rarr;
+        </button>
+      </div>
+
+      <!-- STEP 2: CLIENT DATA REGISTRATION FORM -->
+      <div class="enrollment-modal-container" id="modal-enroll-view" style="display: none;">
+        <div style="text-align: center; margin-bottom: 20px;">
+          <h3 class="bebas uppercase" style="font-size:2.2rem; color:#fff; line-height: 1;">ENTER YOUR DATA</h3>
+          <p style="color:var(--text-muted); font-size:0.8rem; margin-top: 5px;">We need these to configure your profile and automatically send your plans.</p>
+          
+          <div style="background: rgba(247, 201, 72, 0.1); border: 1px solid var(--primary); border-radius: 4px; padding: 10px; margin-top: 15px; display: inline-block; width: 100%;">
+            <p style="font-size:0.85rem; color:#fff; font-weight:600;">
+              Selected Package: <span class="gold-text" id="selected-package-summary">1 Month Plan</span>
+            </p>
+          </div>
+        </div>
+        
+        <form id="booking-form" onsubmit="processBooking(event)">
+          <div class="form-group">
+            <label>Your Full Name</label>
+            <input type="text" id="reg-name" placeholder="Juan Dela Cruz" required>
+          </div>
+          <div class="form-group">
+            <label>Active Email Address</label>
+            <input type="email" id="reg-email" placeholder="juan@gmail.com" required>
+          </div>
+          <div class="form-group">
+            <label>Facebook Profile Link (For Instant Communication)</label>
+            <input type="url" id="reg-fb" placeholder="https://facebook.com/username" required>
+          </div>
+
+          <button type="submit" id="submit-btn" class="btn-primary bebas" style="width:100%; margin-top: 10px;">
+            SECURE SPOT & CONTINUE &rarr;
+          </button>
+          
+          <center style="margin-top: 15px;">
+            <button type="button" onclick="goToPlanStep()" style="background:none; border:none; color:var(--text-muted); font-size:0.75rem; letter-spacing:1px; text-transform:uppercase; cursor:pointer;">&larr; Back to Packages</button>
+          </center>
+        </form>
       </div>
       
-      <!-- STATE 2: CHECKOUT SUCCESS / RECEIPT DETAILS -->
+      <!-- STEP 3: CHECKOUT SUCCESS / INTERACTIVE RECEIPT DETAILS (STACKED VERTICALLY) -->
       <div class="checkout-success-container" id="checkout-success" style="display: none;">
         <div class="success-header-block">
           <div class="urgency-badge uppercase" style="background:rgba(111, 207, 111, 0.1); border-color:#6fcf6f; color:#6fcf6f; margin-bottom:15px;">
             ✓ Registration Recorded
           </div>
-          <h2 class="bebas uppercase" style="font-size:3rem; line-height:1;">YOUR CHOSEN SPOT IS HELD</h2>
+          <h2 class="bebas uppercase" style="font-size:3rem; line-height:1; letter-spacing: 0.5px;">YOUR CHOSEN SPOT IS HELD</h2>
           <p style="color:var(--text-muted); font-size:0.9rem; max-width:600px; margin: 10px auto 0;">Your pending booking has been successfully logged. Please send your payment through one of the verified channels below and send your receipt to activate your plans.</p>
         </div>
 
-        <div class="success-layout-grid">
-          <!-- Left Success Side: Overview -->
-          <div>
-            <div class="receipt-box">
-              <h3 class="bebas uppercase gold-text" style="font-size:1.3rem; margin-bottom:15px;">Booking Details</h3>
-              <div class="receipt-row">
-                <span class="receipt-label">Order Reference ID</span>
-                <span class="receipt-val" id="rec-order-id"></span>
-              </div>
-              <div class="receipt-row">
-                <span class="receipt-label">Client Name</span>
-                <span class="receipt-val" id="rec-name"></span>
-              </div>
-              <div class="receipt-row">
-                <span class="receipt-label">Selected Plan</span>
-                <span class="receipt-val" id="rec-plan"></span>
-              </div>
-              <div class="receipt-row" style="border-bottom:none;">
-                <span class="receipt-label">Amount Due</span>
-                <span class="receipt-val gold-text" id="rec-price" style="font-size:1.4rem; font-family:'Bebas Neue';"></span>
-              </div>
+        <div class="success-layout-stacked">
+          
+          <!-- 1. Booking Details Summary Box -->
+          <div class="receipt-box">
+            <h3 class="bebas uppercase gold-text" style="font-size:1.3rem; margin-bottom:15px; letter-spacing: 0.5px;">Booking Details</h3>
+            <div class="receipt-row">
+              <span class="receipt-label">Order Reference ID</span>
+              <span class="receipt-val" id="rec-order-id" style="font-family: monospace; font-size: 0.9rem;"></span>
+            </div>
+            <div class="receipt-row">
+              <span class="receipt-label">Client Name</span>
+              <span class="receipt-val" id="rec-name"></span>
+            </div>
+            <div class="receipt-row">
+              <span class="receipt-label">Selected Plan</span>
+              <span class="receipt-val" id="rec-plan"></span>
+            </div>
+            <div class="receipt-row" style="border-bottom:none; padding-bottom: 0;">
+              <span class="receipt-label" style="font-weight: 800;">Amount Due</span>
+              <span class="receipt-val gold-text" id="rec-price" style="font-size:1.6rem; font-family:'Bebas Neue';"></span>
+            </div>
+          </div>
+
+          <!-- 2. Secure Tabbed Payment Selector (Now positioned directly below Booking Details) -->
+          <div class="payment-toggle-container">
+            <h4 class="bebas" style="font-size: 1.4rem; letter-spacing: 0.5px; text-align: center; color: #fff;">Select Payment Method</h4>
+            
+            <div class="payment-tabs">
+              <button class="payment-tab-btn active" id="tab-gcash" onclick="switchPaymentTab('gcash')">
+                <span>📱</span> GCash
+              </button>
+              <button class="payment-tab-btn" id="tab-bank" onclick="switchPaymentTab('bank')">
+                <span>🏦</span> BDO Bank
+              </button>
             </div>
 
-            <button onclick="goToMessenger()" class="btn-primary bebas" style="width:100%; margin-top:25px;">
+            <!-- GCash Display Tab Panel -->
+            <div class="payment-details-panel active" id="panel-gcash">
+              <div class="payment-info-box">
+                <div class="payment-info-row">Account Name: <span>JENNARD L.</span></div>
+                <div class="payment-info-row">Mobile Number: <span class="gold-text" style="font-size: 0.95rem;">0912-345-6789</span></div>
+              </div>
+              
+              <!-- Dynamic QR Code Container for GCash -->
+              <div class="qr-code-placeholder">
+                <img id="qr-img-gcash" src="" alt="GCash QR Code">
+              </div>
+              <p style="font-size: 0.7rem; color: var(--text-muted); font-style: italic;">Scan or screenshot QR to pay easily via GCash App</p>
+            </div>
+
+            <!-- BDO Bank Display Tab Panel -->
+            <div class="payment-details-panel" id="panel-bank">
+              <div class="payment-info-box">
+                <div class="payment-info-row">Bank Name: <span>BDO Unibank</span></div>
+                <div class="payment-info-row">Account Name: <span>Jennard Luyong</span></div>
+                <div class="payment-info-row">Account Number: <span class="gold-text" style="font-size: 0.95rem;">1234-5678-9012</span></div>
+              </div>
+              
+              <!-- Dynamic QR Code Container for BDO Bank (Placeholder matches active GCash QR) -->
+              <div class="qr-code-placeholder">
+                <img id="qr-img-bank" src="" alt="BDO Bank QR Code">
+              </div>
+              <p style="font-size: 0.7rem; color: var(--text-muted); font-style: italic;">Scan or use bank details to complete transfer</p>
+            </div>
+          </div>
+
+          <!-- 3. Screenshot Submission Action Button (Now positioned at the absolute bottom of the stacked layout) -->
+          <div style="margin-top: 5px;">
+            <button onclick="goToMessenger()" class="btn-primary bebas" style="width:100%; padding: 18px 20px; font-size: 1.25rem;">
               💬 SEND SCREENSHOT TO COACH JENNARD
             </button>
 
-            <center>
-              <button onclick="restartWorkflow()" class="back-btn" style="background:none; border:none; color:var(--text-muted); font-size:0.75rem; letter-spacing:1px; text-transform:uppercase; margin-top:20px; cursor:pointer;">&larr; Submit Another Order</button>
+            <center style="margin-top: 20px;">
+              <button onclick="restartWorkflow()" class="back-btn" style="background:none; border:none; color:var(--text-muted); font-size:0.75rem; letter-spacing:1px; text-transform:uppercase; cursor:pointer; font-family: 'Montserrat', sans-serif; font-weight: bold;">&larr; Submit Another Order</button>
             </center>
           </div>
 
-          <!-- Right Success Side: Secure payment options -->
-          <div class="pay-option-stack">
-            <div class="pay-method-card">
-              <div class="pay-method-title">
-                <span>📱</span> GCASH OVERLAY
-              </div>
-              <div class="pay-method-data">Account Name: <span>JENNARD L.</span></div>
-              <div class="pay-method-data">Mobile Account Number: <span class="gold-text">0912-345-6789</span></div>
-            </div>
-
-            <div class="pay-method-card">
-              <div class="pay-method-title">
-                <span>🏦</span> BDO DIRECT BANKING
-              </div>
-              <div class="pay-method-data">Bank Name: <span>BDO Unibank</span></div>
-              <div class="pay-method-data">Account Name: <span>Jennard Luyong</span></div>
-              <div class="pay-method-data">Account Number: <span class="gold-text">1234-5678-9012</span></div>
-            </div>
-          </div>
         </div>
       </div>
 
@@ -986,6 +1092,13 @@
     // PASTE YOUR DEPLOYED WEB APP URL HERE (Required for static/GitHub hosting)
     const WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbyIJ_GO3EBIrP-UGtkdDtyvfo2QmCKa853M_F-nReroaxF4hRT4taZ9Pk2z-28B3_CF/exec';
     const COACH_FB = 'https://www.facebook.com/nardzkie.luyong';
+
+    // GCash QR Code Mapping per Package Price
+    const QR_MAPPINGS = {
+      "2000": "https://i.imgur.com/yXEyyv1.png", // 1 Month Package
+      "3000": "https://i.imgur.com/Em4nsaQ.png", // 2 Months Package
+      "4000": "https://i.imgur.com/1OoCKmb.png"  // 5 Months Package
+    };
 
     let selectedPlan = "1 Month Plan";
     let selectedPrice = "2000";
@@ -1010,15 +1123,50 @@
       const modal = document.getElementById('checkout-modal');
       modal.style.setProperty('display', 'flex', 'important');
       document.body.style.overflow = 'hidden';
-      // Reset views within the modal
-      document.getElementById('modal-enroll-view').style.display = 'block';
-      document.getElementById('checkout-success').style.display = 'none';
+      // Reset views within the modal to Step 1 (Plan Selection)
+      goToPlanStep();
     }
 
     function closeModal() {
       const modal = document.getElementById('checkout-modal');
       modal.style.setProperty('display', 'none', 'important');
       document.body.style.overflow = 'auto';
+    }
+
+    // Navigation Step Helpers
+    function goToPlanStep() {
+      document.getElementById('modal-plan-view').style.display = 'block';
+      document.getElementById('modal-enroll-view').style.display = 'none';
+      document.getElementById('checkout-success').style.display = 'none';
+    }
+
+    // Transition to Details Step
+    function goToDetailsStep() {
+      // Set summary text based on selected plan
+      document.getElementById('selected-package-summary').innerText = selectedPlan + ' - ₱' + parseInt(selectedPrice).toLocaleString();
+      
+      document.getElementById('modal-plan-view').style.display = 'none';
+      document.getElementById('modal-enroll-view').style.display = 'block';
+      document.getElementById('checkout-success').style.display = 'none';
+    }
+
+    // Interactive Payment Method Selector (Tab Toggle)
+    function switchPaymentTab(method) {
+      // Remove active classes on buttons
+      document.getElementById('tab-gcash').classList.remove('active');
+      document.getElementById('tab-bank').classList.remove('active');
+      
+      // Remove active classes on panels
+      document.getElementById('panel-gcash').classList.remove('active');
+      document.getElementById('panel-bank').classList.remove('active');
+      
+      if (method === 'gcash') {
+        document.getElementById('tab-gcash').classList.add('active');
+        document.getElementById('panel-gcash').classList.add('active');
+      } else {
+        document.getElementById('tab-bank').classList.add('active');
+        document.getElementById('panel-bank').classList.add('active');
+      }
     }
 
     // Submit payload directly back to Google Apps Script (itself)
@@ -1053,26 +1201,44 @@
           body: JSON.stringify(payload)
         });
 
+        // Resolve active QR Code mapping based on current selected price parameters
+        const activeQrUrl = QR_MAPPINGS[selectedPrice] || QR_MAPPINGS["2000"];
+        document.getElementById('qr-img-gcash').src = activeQrUrl;
+        document.getElementById('qr-img-bank').src = activeQrUrl; // Temporary bank QR placeholder matching GCash
+
         // Set text content for successful checkout
         document.getElementById('rec-order-id').innerText = generatedOrderId;
         document.getElementById('rec-name').innerText = name;
         document.getElementById('rec-plan').innerText = selectedPlan + ' + 15 Days FREE';
         document.getElementById('rec-price').innerText = '₱' + parseInt(selectedPrice).toLocaleString();
 
-        // Switch screens seamlessly inside the modal
+        // Switch screens seamlessly inside the modal to Step 3 (Success Screen)
+        document.getElementById('modal-plan-view').style.display = 'none';
         document.getElementById('modal-enroll-view').style.display = 'none';
         document.getElementById('checkout-success').style.display = 'block';
+        
+        // Reset default active payment panel to GCash
+        switchPaymentTab('gcash');
 
       } catch(err) {
         console.error('Submission encountered connection parameters, displaying fallback view:', err);
+        
+        // Load fallback dynamic QR codes anyway
+        const activeQrUrl = QR_MAPPINGS[selectedPrice] || QR_MAPPINGS["2000"];
+        document.getElementById('qr-img-gcash').src = activeQrUrl;
+        document.getElementById('qr-img-bank').src = activeQrUrl;
+
         // Fallback UI switch if no-cors blocks fetch status natively
         document.getElementById('rec-order-id').innerText = generatedOrderId;
         document.getElementById('rec-name').innerText = name;
         document.getElementById('rec-plan').innerText = selectedPlan + ' + 15 Days FREE';
         document.getElementById('rec-price').innerText = '₱' + parseInt(selectedPrice).toLocaleString();
         
+        document.getElementById('modal-plan-view').style.display = 'none';
         document.getElementById('modal-enroll-view').style.display = 'none';
         document.getElementById('checkout-success').style.display = 'block';
+        
+        switchPaymentTab('gcash');
       } finally {
         btn.disabled = false;
         btn.innerText = 'SECURE SPOT & CONTINUE →';
