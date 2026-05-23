@@ -37,45 +37,68 @@
   .uppercase { text-transform: uppercase; }
   .bebas { font-family: 'Bebas Neue', sans-serif; }
   
-  /* --- HERO STORY SECTION (CLEAN CINEMATIC BG) --- */
+  /* --- HERO STORY SECTION (SPLIT SCREEN LAYOUT) --- */
   .hero-story {
     position: relative;
-    padding: 100px 0 80px;
-    background: radial-gradient(circle at 75% 50%, rgba(247,201,72,0.07) 0%, var(--bg-dark) 70%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 80px 0;
+    background: radial-gradient(circle at 75% 50%, rgba(247,201,72,0.05) 0%, var(--bg-dark) 70%);
     border-bottom: 1px solid var(--border-color);
   }
   
   .hero-grid {
     position: relative;
     display: grid;
-    grid-template-columns: 1fr 1.1fr;
-    gap: 55px;
+    grid-template-columns: 1fr 1.1fr; /* Image on Left, slightly wider Text Column on Right */
+    gap: 60px;
     align-items: center;
     z-index: 2;
+    width: 100%;
   }
   
-  /* --- SINGLE DIRECT PHOTO SHOWCASE CARD (UNCROPPED RATIO SETUP) --- */
+  /* --- SINGLE DIRECT PHOTO SHOWCASE (LEFT COLUMN) --- */
   .single-photo-showcase {
     position: relative;
-    border-radius: 10px;
-    overflow: hidden;
-    border: 1px solid rgba(247, 201, 72, 0.25);
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.85), 0 0 35px rgba(247, 201, 72, 0.12);
     width: 100%;
-    max-width: 420px;
-    margin: 0 auto;
-    background: #000;
+    max-width: 540px;
+    margin-left: 0;
+    margin-right: auto;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    border-radius: 0;
+    overflow: visible;
   }
   .single-photo-showcase img {
     width: 100%;
     height: auto;
-    max-height: 550px;
-    object-fit: contain; /* Displays full photo beautifully without cropping */
+    max-height: 720px;
+    object-fit: contain;
     display: block;
+    filter: drop-shadow(0 15px 35px rgba(247, 201, 72, 0.15)) drop-shadow(0 20px 45px rgba(0, 0, 0, 0.85));
     transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
   }
   .single-photo-showcase:hover img {
-    transform: scale(1.02);
+    transform: scale(1.03);
+  }
+
+  /* --- TEXT CONTENT COLUMN (RIGHT COLUMN) --- */
+  .hero-text-content {
+    max-width: 580px;
+    margin-left: auto;
+    margin-right: 0;
+    position: relative;
+    z-index: 3;
+    text-align: left !important;
+  }
+
+  .hero-text-content h1,
+  .hero-text-content p,
+  .hero-text-content span,
+  .hero-text-content div {
+    text-align: left !important;
   }
 
   .hero-text-content h1 {
@@ -146,17 +169,73 @@
     backdrop-filter: blur(8px);
     border-radius: 6px;
     border: 1px solid var(--border-color);
+    text-align: left !important;
   }
   .stat-item h3 {
     font-size: 1.6rem;
     color: var(--primary);
     margin-bottom: 1px;
+    text-align: left !important;
   }
   .stat-item p {
     font-size: 0.65rem;
     color: var(--text-muted);
     font-weight: 700;
     letter-spacing: 1px;
+    text-align: left !important;
+  }
+
+  /* --- GENETICS SECTION --- */
+  .genetics-section {
+    padding: 100px 0;
+    background: #090909;
+    border-bottom: 1px solid var(--border-color);
+    position: relative;
+  }
+  .genetics-grid {
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 60px;
+    align-items: center;
+  }
+  .genetics-img-card {
+    position: relative;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid rgba(247, 201, 72, 0.2);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
+    max-width: 420px;
+    width: 100%;
+    margin: 0 auto;
+    background: #111;
+  }
+  .genetics-img-card img {
+    width: 100%;
+    height: auto;
+    display: block;
+    filter: grayscale(20%);
+    transition: filter 0.4s;
+  }
+  .genetics-img-card:hover img {
+    filter: grayscale(0%);
+  }
+  .genetics-content h2 {
+    font-size: 3rem;
+    line-height: 1;
+    margin-bottom: 20px;
+    letter-spacing: 0.5px;
+  }
+  .genetics-lead {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 15px;
+  }
+  .genetics-text {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    margin-bottom: 25px;
+    line-height: 1.7;
   }
 
   /* --- PAIN POINTS SECTION --- */
@@ -222,7 +301,7 @@
   .negative .bullet { color: #ef5350; }
   .positive .bullet { color: var(--primary); }
 
-  /* --- PHYSICAL TRANSFORMATION PROOF SECTION (SCROLLABLE STACKED ROWS FORMAT) --- */
+  /* --- PHYSICAL TRANSFORMATION PROOF SECTION --- */
   .proof-section {
     padding: 100px 0;
     background: #060606;
@@ -370,7 +449,7 @@
   }
   .modal-wrapper {
     width: 100%;
-    max-width: 650px; /* Highly optimized for seamless single-column step card flow */
+    max-width: 650px;
     margin: auto;
     position: relative;
     animation: modalScaleUp 0.4s cubic-bezier(0.165, 0.84, 0.44, 1) both;
@@ -427,20 +506,26 @@
   }
   .plan-row:hover {
     border-color: rgba(247, 201, 72, 0.3);
-    transform: translateX(4px);
   }
   .plan-row.active {
     border-color: var(--primary);
     background: linear-gradient(90deg, #1c1a14 0%, #121212 100%);
   }
-  .plan-row.active::after {
-    content: '✓';
-    color: var(--primary);
-    font-weight: 900;
-    font-size: 1.3rem;
-  }
   .plan-main-details {
-    max-width: 80%;
+    flex-grow: 1;
+    margin-right: 15px;
+  }
+  .plan-title-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 4px;
+  }
+  .plan-title-txt {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #fff;
   }
   .plan-badge-inline {
     background: var(--primary);
@@ -449,26 +534,66 @@
     font-weight: 900;
     padding: 2px 10px;
     border-radius: 30px;
-    margin-left: 8px;
-    vertical-align: middle;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     text-transform: uppercase;
-  }
-  .plan-title-txt {
-    font-size: 1.1rem;
-    font-weight: 800;
-    color: #fff;
-    margin-bottom: 4px;
+    white-space: nowrap;
   }
   .plan-price-tag {
     font-size: 1.6rem;
     color: var(--primary);
     font-weight: 900;
     letter-spacing: 0.5px;
+    flex-shrink: 0;
   }
+  
+  /* Check marks layout changed to vertically aligned row stack (as requested) */
   .plan-features-mini {
     font-size: 0.8rem;
     color: var(--text-muted);
-    margin-top: 5px;
+    margin-top: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .plan-feature-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--text-muted);
+  }
+  .plan-row.active .plan-feature-item {
+    color: #e0e0e0;
+  }
+  
+  .plan-radio-indicator {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid #444;
+    margin-right: 15px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+    background: transparent;
+  }
+  .plan-row.active .plan-radio-indicator {
+    border-color: var(--primary);
+    background: var(--primary);
+  }
+  .plan-radio-indicator::after {
+    content: '✓';
+    color: #000;
+    font-size: 0.75rem;
+    font-weight: 900;
+    display: none;
+    line-height: 1;
+  }
+  .plan-row.active .plan-radio-indicator::after {
+    display: block;
   }
 
   /* Form Elements */
@@ -508,7 +633,7 @@
     box-shadow: 0 0 15px rgba(247, 201, 72, 0.1);
   }
 
-  /* --- INTERACTIVE SUCCESS SCREEN VIEW (OPTIMIZED VERTICAL STACK) --- */
+  /* --- INTERACTIVE SUCCESS SCREEN VIEW --- */
   .checkout-success-container {
     background: var(--bg-card);
     border: 1px solid var(--border-color);
@@ -549,7 +674,7 @@
   .receipt-label { color: var(--text-muted); text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.5px; }
   .receipt-val { color: #fff; font-weight: 700; text-align: right; }
   
-  /* Payment Method Toggle */
+  /* Exclusive GCash Payment Container */
   .payment-toggle-container {
     background: #181818;
     border: 1px solid var(--border-color);
@@ -557,55 +682,17 @@
     padding: 24px;
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 20px;
   }
-  .payment-tabs {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    background: #121212;
-    padding: 6px;
-    border-radius: 6px;
-    border: 1px solid var(--border-color);
-  }
-  .payment-tab-btn {
-    background: transparent;
-    border: none;
-    color: var(--text-muted);
-    padding: 12px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: 700;
-    font-size: 0.8rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    font-family: 'Montserrat', sans-serif;
-    transition: all 0.3s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-  }
-  .payment-tab-btn.active {
-    background: var(--primary);
-    color: #000;
-  }
-
-  /* Payment Display Panels */
+  
   .payment-details-panel {
-    display: none;
+    display: flex;
     flex-direction: column;
     align-items: center;
     gap: 15px;
     text-align: center;
-    animation: fadeInTab 0.3s ease both;
-  }
-  .payment-details-panel.active {
-    display: flex;
-  }
-  @keyframes fadeInTab {
-    from { opacity: 0; transform: translateY(5px); }
-    to { opacity: 1; transform: translateY(0); }
+    width: 100%;
   }
   
   .payment-info-box {
@@ -631,20 +718,21 @@
     font-weight: 700;
   }
 
-  /* QR Code Container Styles - ENLARGED to 280px for high-scannability on all devices */
+  /* QR Code Container Styles */
   .qr-code-placeholder {
-    width: 280px;
-    height: 280px;
+    width: 360px;
+    height: 360px;
     max-width: 100%;
     background: #ffffff;
-    border-radius: 8px;
-    padding: 12px;
+    border-radius: 12px;
+    padding: 16px;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.6);
     overflow: hidden;
-    border: 2px solid var(--primary);
+    border: 3px solid var(--primary);
+    aspect-ratio: 1/1;
   }
   .qr-code-placeholder img {
     width: 100%;
@@ -670,6 +758,11 @@
     .comparison-grid, .blueprint-grid, .hero-grid {
       grid-template-columns: 1fr;
     }
+    .genetics-grid {
+      display: flex;
+      flex-direction: column-reverse; /* Places text on top, photo on bottom on mobile */
+      gap: 40px;
+    }
     .proof-timeline-rows {
       gap: 70px;
     }
@@ -685,32 +778,93 @@
       grid-row: auto;
     }
     .bp-card { padding: 30px; }
-    .hero-grid { gap: 30px; }
     .hero-story {
-      padding: 60px 0 40px;
-      background: radial-gradient(circle at center, rgba(247,201,72,0.05) 0%, var(--bg-dark) 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 60px 0;
     }
-    .stats-bar { grid-template-columns: 1fr; text-align: center; }
+    .hero-grid {
+      grid-template-columns: 1fr;
+      gap: 30px;
+    }
+    .single-photo-showcase {
+      margin: 0 auto;
+      grid-row: 1;
+    }
+    .hero-text-content {
+      margin: 0 auto;
+      max-width: 100%;
+      text-align: left !important;
+      grid-row: 2;
+    }
+    .stats-bar { 
+      grid-template-columns: 1fr; 
+      text-align: left;
+    }
     .btn-primary { width: 100%; }
     .success-header-block { padding: 20px; }
     .success-layout-stacked { padding: 20px; }
-    .enrollment-modal-container { padding: 45px 20px 20px 20px; }
+    
+    /* Optimized Modal Spacing & Alignment for Mobile */
+    .enrollment-modal-container { 
+      padding: 60px 20px 20px 20px; 
+    }
+    .modal-close-btn {
+      top: 15px;
+      right: 20px;
+      font-size: 1.8rem;
+    }
+  }
+
+  /* Mobile-specific plan card modifications (under 600px width) to avoid text-squeeze & alignment overlap */
+  @media(max-width: 600px) {
+    .plan-row {
+      display: grid !important;
+      grid-template-areas:
+        "radio price"
+        "details details" !important;
+      grid-template-columns: auto 1fr !important;
+      grid-template-rows: auto auto !important;
+      align-items: center !important;
+      gap: 12px 10px !important;
+      padding: 16px !important;
+    }
+    .plan-radio-indicator {
+      grid-area: radio !important;
+      margin-right: 0 !important;
+    }
+    .plan-price-tag {
+      grid-area: price !important;
+      text-align: right !important;
+      font-size: 1.7rem !important;
+      margin-top: 0 !important;
+    }
+    .plan-main-details {
+      grid-area: details !important;
+      margin-right: 0 !important;
+      width: 100% !important;
+    }
+    .plan-title-row {
+      flex-wrap: wrap !important;
+      gap: 6px !important;
+    }
   }
 </style>
 </head>
 <body>
 
-  <!-- HERO STORY SECTION (FIRST PAGE) -->
+  <!-- HERO STORY SECTION (FULL SCREEN SPLIT CONTAINER) -->
   <section class="hero-story">
     <div class="container">
       <div class="hero-grid">
         
-        <!-- Left Hero Side: Direct Image Showcase Card (Not Background) -->
+        <!-- Left Column: Immersive Uncropped Stage Physique Showcase Card (Jennard completely visible on left) -->
         <div class="single-photo-showcase">
-          <img src="https://i.imgur.com/e7DazwQ.png" alt="Coach Jennard - V-Taper Peak Conditioning">
+          <img src="https://i.imgur.com/fIJCtAI.png" alt="Coach Jennard - Stage Peak Conditioning">
         </div>
 
-        <!-- Right Hero Side: Direct Authority & Pitch -->
+        <!-- Right Column: Left-Aligned Direct Authority & Pitch -->
         <div class="hero-text-content">
           <h1 class="bebas uppercase">I BUILT THE SYSTEM WITH MY OWN <span class="gold-text">TRANSFORMATION</span></h1>
           
@@ -740,6 +894,32 @@
             </div>
           </div>
 
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- NEW GENETICS MYTH BUSTER SECTION -->
+  <section class="genetics-section">
+    <div class="container">
+      <div class="genetics-grid">
+        
+        <!-- Left Column: Childhood/Teen Starting Picture -->
+        <div class="genetics-img-card">
+          <img src="https://i.imgur.com/2OzT4pD.png" alt="Coach Jennard - Genetics Starting Point">
+        </div>
+
+        <!-- Right Column: Dynamic Genetic Proof Content -->
+        <div class="genetics-content">
+          <span class="proof-phase">The Starting Point</span>
+          <h2 class="bebas uppercase">GENETICS IS NOT <span class="gold-text">YOUR LIMITATION</span></h2>
+          <p class="genetics-lead">"I have bad genetics." — The most common excuse keeping gym-goers from ever starting.</p>
+          <p class="genetics-text">
+            When I started, I did not possess elite genetics, a naturally broad frame, or a rapid metabolism. I was completely average. 
+            Your genetics do not dictate your final result—they only define your starting line. Through scientific progressive overload, custom calorie partitions, and absolute lifestyle accountability, you can override any starting framework. If I broke through my baseline, so can you.
+          </p>
+          <button onclick="openModal()" class="btn-primary bebas">START YOUR OVERHAUL NOW &rarr;</button>
         </div>
 
       </div>
@@ -820,13 +1000,13 @@
         <!-- Phase 1 Row -->
         <div class="proof-row">
           <div class="proof-img-side">
-            <img src="https://i.imgur.com/2OzT4pD.png" alt="Before Coaching">
+            <img src="https://i.imgur.com/OJJ3muK.png" alt="Before Coaching">
           </div>
           <div class="proof-text-side">
             <span class="proof-phase">Phase 01</span>
             <h2 class="proof-row-title">THE STUBBORN PLATEAU</h2>
             <p class="proof-row-story">I felt stuck in a continuous plateau with standard gym workouts. Trying generic eating schedules, guessing calories, and lacking the density, structural shape, or correct guidelines to make lasting change. This is the frustrating phase most lifters never break out of.</p>
-            <button onclick="openModal()" class="btn-primary bebas" style="padding: 12px 28px; font-size: 1.1rem; width: fit-content; border-radius: 4px; box-shadow: none;">GET PACKAGE NOW</button>
+            <p style="margin-top: 15px;"><button onclick="openModal()" class="btn-primary bebas" style="padding: 12px 28px; font-size: 1.1rem; width: fit-content; border-radius: 4px; box-shadow: none;">GET PACKAGE NOW</button></p>
           </div>
         </div>
         
@@ -838,21 +1018,21 @@
           <div class="proof-text-side">
             <span class="proof-phase">Phase 02</span>
             <h2 class="proof-row-title">LEAN RECOMPENSATION</h2>
-            <p class="proof-row-story">The transition. Deploying calculated macro schedules and precise progressive overload to establish consistent, clean hypertrophic stimulus. My muscle cells expanded in density, carving out thick athletic fullness without accumulating unnecessary body fat.</p>
-            <button onclick="openModal()" class="btn-primary bebas" style="padding: 12px 28px; font-size: 1.1rem; width: fit-content; border-radius: 4px; box-shadow: none;">GET PACKAGE NOW</button>
+            <p class="proof-row-story">The transition. Deploying calculated macro schedules and precise progressive overload to establish consistent, clean hypertrophic stimulus. My muscle cells expanded in density, carving out thick athletic fullness without accumulating unwanted body fat.</p>
+            <p style="margin-top: 15px;"><button onclick="openModal()" class="btn-primary bebas" style="padding: 12px 28px; font-size: 1.1rem; width: fit-content; border-radius: 4px; box-shadow: none;">GET PACKAGE NOW</button></p>
           </div>
         </div>
         
         <!-- Phase 3 Row -->
         <div class="proof-row">
           <div class="proof-img-side">
-            <img src="https://i.imgur.com/6z0Mk7I.png" alt="Aesthetic Peak Condition">
+            <img src="https://i.imgur.com/e7DazwQ.png" alt="Aesthetic Peak Condition">
           </div>
           <div class="proof-text-side">
             <span class="proof-phase">Phase 03</span>
             <h2 class="proof-row-title">THE AESTHETIC PEAK</h2>
             <p class="proof-row-story">The polished result: maintaining exceptionally low overall body fat, premium vascular conditioning, and complete authority over metrics. I built the ultimate physical standard. Reaching your peak visual capacity is a matter of science, tracking, and consistency.</p>
-            <button onclick="openModal()" class="btn-primary bebas" style="padding: 12px 28px; font-size: 1.1rem; width: fit-content; border-radius: 4px; box-shadow: none;">GET PACKAGE NOW</button>
+            <p style="margin-top: 15px;"><button onclick="openModal()" class="btn-primary bebas" style="padding: 12px 28px; font-size: 1.1rem; width: fit-content; border-radius: 4px; box-shadow: none;">GET PACKAGE NOW</button></p>
           </div>
         </div>
       </div>
@@ -916,30 +1096,53 @@
         <div class="plans-vertical">
           <!-- Plan Card 1 -->
           <div class="plan-row active" data-plan="1 Month Plan" data-price="2000">
+            <div class="plan-radio-indicator"></div>
             <div class="plan-main-details">
-              <div class="plan-title-txt">1-Month Transformation <span class="plan-badge-inline">Popular</span></div>
-              <div class="plan-desc" style="font-size:0.8rem; color:var(--text-muted);">Get fully initiated into macro-tracking and custom workout pacing + 15 Days Free.</div>
-              <div class="plan-features-mini">✓ Home/Gym Program ✓ Daily Q&A Support ✓ Nutrition Adjustments</div>
+              <div class="plan-title-row">
+                <span class="plan-title-txt">1-Month Transformation</span>
+                <span class="plan-badge-inline">Popular</span>
+              </div>
+              <div class="plan-desc" style="font-size:0.8rem; color:var(--text-muted); margin-bottom: 6px;">Get fully initiated into macro-tracking and custom workout pacing + 15 Days Free.</div>
+              <div class="plan-features-mini">
+                <div class="plan-feature-item">✓ Home/Gym Program</div>
+                <div class="plan-feature-item">✓ Daily Q&A Support</div>
+                <div class="plan-feature-item">✓ Nutrition Adjustments</div>
+              </div>
             </div>
             <div class="plan-price-tag bebas">₱2,000</div>
           </div>
 
           <!-- Plan Card 2 -->
           <div class="plan-row" data-plan="2 Months Plan" data-price="3000">
+            <div class="plan-radio-indicator"></div>
             <div class="plan-main-details">
-              <div class="plan-title-txt">2-Month Momentum Plan</div>
-              <div class="plan-desc" style="font-size:0.8rem; color:var(--text-muted);">Secure significant fat-burning parameters and core strength progression + 15 Days Free.</div>
-              <div class="plan-features-mini">✓ Weekly Metrics Check ✓ Advanced Supplement Guide ✓ Form Analysis</div>
+              <div class="plan-title-row">
+                <span class="plan-title-txt">2-Month Momentum Plan</span>
+              </div>
+              <div class="plan-desc" style="font-size:0.8rem; color:var(--text-muted); margin-bottom: 6px;">Secure significant fat-burning parameters and core strength progression + 15 Days Free.</div>
+              <div class="plan-features-mini">
+                <div class="plan-feature-item">✓ Weekly Metrics Check</div>
+                <div class="plan-feature-item">✓ Advanced Supplement Guide</div>
+                <div class="plan-feature-item">✓ Form Analysis</div>
+              </div>
             </div>
             <div class="plan-price-tag bebas">₱3,000</div>
           </div>
 
           <!-- Plan Card 3 -->
           <div class="plan-row" data-plan="5 Months Plan" data-price="4000">
+            <div class="plan-radio-indicator"></div>
             <div class="plan-main-details">
-              <div class="plan-title-txt">5-Month Elite Overhaul <span class="plan-badge-inline" style="background:#fff; color:#000;">Elite Value</span></div>
-              <div class="plan-desc" style="font-size:0.8rem; color:var(--text-muted);">The gold standard physical restructuring program. Total body recomposition + 15 Days Free.</div>
-              <div class="plan-features-mini">✓ Direct Premium Support ✓ Priority Video Audits ✓ Strategic Peak Week</div>
+              <div class="plan-title-row">
+                <span class="plan-title-txt">5-Month Elite Overhaul</span>
+                <span class="plan-badge-inline" style="background:#fff; color:#000;">Elite Value</span>
+              </div>
+              <div class="plan-desc" style="font-size:0.8rem; color:var(--text-muted); margin-bottom: 6px;">The gold standard physical restructuring program. Total body recomposition + 15 Days Free.</div>
+              <div class="plan-features-mini">
+                <div class="plan-feature-item">✓ Direct Premium Support</div>
+                <div class="plan-feature-item">✓ Priority Video Audits</div>
+                <div class="plan-feature-item">✓ Strategic Peak Week</div>
+              </div>
             </div>
             <div class="plan-price-tag bebas">₱4,000</div>
           </div>
@@ -994,7 +1197,7 @@
             ✓ Registration Recorded
           </div>
           <h2 class="bebas uppercase" style="font-size:3rem; line-height:1; letter-spacing: 0.5px;">YOUR CHOSEN SPOT IS HELD</h2>
-          <p style="color:var(--text-muted); font-size:0.9rem; max-width:600px; margin: 10px auto 0;">Your pending booking has been successfully logged. Please send your payment through one of the verified channels below and send your receipt to activate your plans.</p>
+          <p style="color:var(--text-muted); font-size:0.9rem; max-width:600px; margin: 10px auto 0;">Your pending booking has been successfully logged. Please send your payment through GCash below and send your receipt to activate your plans.</p>
         </div>
 
         <div class="success-layout-stacked">
@@ -1020,50 +1223,25 @@
             </div>
           </div>
 
-          <!-- 2. Secure Tabbed Payment Selector (Now positioned directly below Booking Details) -->
+          <!-- 2. Secure Payment Details (GCash Only Setup) -->
           <div class="payment-toggle-container">
-            <h4 class="bebas" style="font-size: 1.4rem; letter-spacing: 0.5px; text-align: center; color: #fff;">Select Payment Method</h4>
+            <h4 class="bebas" style="font-size: 1.4rem; letter-spacing: 0.5px; text-align: center; color: #fff;">Pay via GCash</h4>
             
-            <div class="payment-tabs">
-              <button class="payment-tab-btn active" id="tab-gcash" onclick="switchPaymentTab('gcash')">
-                <span>📱</span> GCash
-              </button>
-              <button class="payment-tab-btn" id="tab-bank" onclick="switchPaymentTab('bank')">
-                <span>🏦</span> BDO Bank
-              </button>
-            </div>
-
-            <!-- GCash Display Tab Panel -->
-            <div class="payment-details-panel active" id="panel-gcash">
+            <div class="payment-details-panel active">
               <div class="payment-info-box">
-                <div class="payment-info-row">Account Name: <span>JENNARD L.</span></div>
-                <div class="payment-info-row">Mobile Number: <span class="gold-text" style="font-size: 0.95rem;">0912-345-6789</span></div>
+                <div class="payment-info-row">Account Name: <span>Jennard Luyong</span></div>
+                <div class="payment-info-row">Mobile Number: <span class="gold-text" style="font-size: 0.95rem;">0966-681-1756</span></div>
               </div>
               
-              <!-- Dynamic QR Code Container for GCash -->
+              <!-- Dynamic QR Code Container for GCash (Maximized screen presence) -->
               <div class="qr-code-placeholder">
                 <img id="qr-img-gcash" src="" alt="GCash QR Code">
               </div>
               <p style="font-size: 0.7rem; color: var(--text-muted); font-style: italic;">Scan or screenshot QR to pay easily via GCash App</p>
             </div>
-
-            <!-- BDO Bank Display Tab Panel -->
-            <div class="payment-details-panel" id="panel-bank">
-              <div class="payment-info-box">
-                <div class="payment-info-row">Bank Name: <span>BDO Unibank</span></div>
-                <div class="payment-info-row">Account Name: <span>Jennard Luyong</span></div>
-                <div class="payment-info-row">Account Number: <span class="gold-text" style="font-size: 0.95rem;">1234-5678-9012</span></div>
-              </div>
-              
-              <!-- Dynamic QR Code Container for BDO Bank (Placeholder matches active GCash QR) -->
-              <div class="qr-code-placeholder">
-                <img id="qr-img-bank" src="" alt="BDO Bank QR Code">
-              </div>
-              <p style="font-size: 0.7rem; color: var(--text-muted); font-style: italic;">Scan or use bank details to complete transfer</p>
-            </div>
           </div>
 
-          <!-- 3. Screenshot Submission Action Button (Now positioned at the absolute bottom of the stacked layout) -->
+          <!-- 3. Screenshot Submission Action Button -->
           <div style="margin-top: 5px;">
             <button onclick="goToMessenger()" class="btn-primary bebas" style="width:100%; padding: 18px 20px; font-size: 1.25rem;">
               💬 SEND SCREENSHOT TO COACH JENNARD
@@ -1093,11 +1271,11 @@
     const WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbyIJ_GO3EBIrP-UGtkdDtyvfo2QmCKa853M_F-nReroaxF4hRT4taZ9Pk2z-28B3_CF/exec';
     const COACH_FB = 'https://www.facebook.com/nardzkie.luyong';
 
-    // GCash QR Code Mapping per Package Price
+    // GCash QR Code Mapping per Package Price (Updated with your custom-made payment targets)
     const QR_MAPPINGS = {
-      "2000": "https://i.imgur.com/yXEyyv1.png", // 1 Month Package
-      "3000": "https://i.imgur.com/Em4nsaQ.png", // 2 Months Package
-      "4000": "https://i.imgur.com/1OoCKmb.png"  // 5 Months Package
+      "2000": "https://i.imgur.com/6AjaFBZ.png", // 1 Month Package
+      "3000": "https://i.imgur.com/ltWCecO.png", // 2 Months Package
+      "4000": "https://i.imgur.com/MPJgh14.png"  // 5 Months Package
     };
 
     let selectedPlan = "1 Month Plan";
@@ -1127,6 +1305,7 @@
       goToPlanStep();
     }
 
+    // Close the overlay modal
     function closeModal() {
       const modal = document.getElementById('checkout-modal');
       modal.style.setProperty('display', 'none', 'important');
@@ -1148,25 +1327,6 @@
       document.getElementById('modal-plan-view').style.display = 'none';
       document.getElementById('modal-enroll-view').style.display = 'block';
       document.getElementById('checkout-success').style.display = 'none';
-    }
-
-    // Interactive Payment Method Selector (Tab Toggle)
-    function switchPaymentTab(method) {
-      // Remove active classes on buttons
-      document.getElementById('tab-gcash').classList.remove('active');
-      document.getElementById('tab-bank').classList.remove('active');
-      
-      // Remove active classes on panels
-      document.getElementById('panel-gcash').classList.remove('active');
-      document.getElementById('panel-bank').classList.remove('active');
-      
-      if (method === 'gcash') {
-        document.getElementById('tab-gcash').classList.add('active');
-        document.getElementById('panel-gcash').classList.add('active');
-      } else {
-        document.getElementById('tab-bank').classList.add('active');
-        document.getElementById('panel-bank').classList.add('active');
-      }
     }
 
     // Submit payload directly back to Google Apps Script (itself)
@@ -1204,7 +1364,6 @@
         // Resolve active QR Code mapping based on current selected price parameters
         const activeQrUrl = QR_MAPPINGS[selectedPrice] || QR_MAPPINGS["2000"];
         document.getElementById('qr-img-gcash').src = activeQrUrl;
-        document.getElementById('qr-img-bank').src = activeQrUrl; // Temporary bank QR placeholder matching GCash
 
         // Set text content for successful checkout
         document.getElementById('rec-order-id').innerText = generatedOrderId;
@@ -1216,9 +1375,6 @@
         document.getElementById('modal-plan-view').style.display = 'none';
         document.getElementById('modal-enroll-view').style.display = 'none';
         document.getElementById('checkout-success').style.display = 'block';
-        
-        // Reset default active payment panel to GCash
-        switchPaymentTab('gcash');
 
       } catch(err) {
         console.error('Submission encountered connection parameters, displaying fallback view:', err);
@@ -1226,7 +1382,6 @@
         // Load fallback dynamic QR codes anyway
         const activeQrUrl = QR_MAPPINGS[selectedPrice] || QR_MAPPINGS["2000"];
         document.getElementById('qr-img-gcash').src = activeQrUrl;
-        document.getElementById('qr-img-bank').src = activeQrUrl;
 
         // Fallback UI switch if no-cors blocks fetch status natively
         document.getElementById('rec-order-id').innerText = generatedOrderId;
@@ -1237,21 +1392,20 @@
         document.getElementById('modal-plan-view').style.display = 'none';
         document.getElementById('modal-enroll-view').style.display = 'none';
         document.getElementById('checkout-success').style.display = 'block';
-        
-        switchPaymentTab('gcash');
       } finally {
         btn.disabled = false;
         btn.innerText = 'SECURE SPOT & CONTINUE →';
       }
     }
 
+    // Opens Direct Coach Messenger for Verification
     function goToMessenger() {
       window.open(COACH_FB, '_blank');
     }
 
+    // Resets order state seamlessly
     function restartWorkflow() {
       document.getElementById('booking-form').reset();
-      // Hide modal completely and unlock body scroll
       closeModal();
     }
   </script>
