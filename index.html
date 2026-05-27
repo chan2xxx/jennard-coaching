@@ -518,7 +518,7 @@
     margin: 0 auto 30px;
   }
 
-  /* --- POP-UP MODAL OVERLAY (UPDATED Z-INDEX TO COVER HEADER) --- */
+  /* --- POP-UP MODAL OVERLAY --- */
   .modal-overlay {
     position: fixed;
     top: 0;
@@ -531,7 +531,7 @@
     display: none;
     align-items: center;
     justify-content: center;
-    z-index: 25000; /* FIXED: Increased from 9999 to cover navigation header (10000) completely */
+    z-index: 25000; /* Stacks completely above the fixed navigation header */
     padding: 20px;
     overflow-y: auto;
   }
@@ -547,7 +547,7 @@
     to { opacity: 1; transform: scale(1); }
   }
 
-  /* --- MODAL CLOSE BUTTON (OPTIMIZED FOR EASY PHONE TAPPING) --- */
+  /* --- MODAL CLOSE BUTTON --- */
   .modal-close-btn {
     position: absolute;
     top: -15px;
@@ -900,26 +900,36 @@
     .hamburger-btn {
       display: flex; /* Activate mobile dropdown triggers */
     }
+    
+    /* MODIFIED mobile nav menu: Slides down gracefully instead of covering the whole screen */
     .nav-menu {
-      position: fixed;
+      position: absolute;
       top: 70px;
-      left: -100%;
+      left: 0;
       width: 100%;
-      height: calc(100vh - 70px);
+      height: auto;
+      max-height: 0; /* Collapsed by default */
+      overflow: hidden;
       background: rgba(7, 7, 7, 0.98);
       backdrop-filter: blur(15px);
       -webkit-backdrop-filter: blur(15px);
       flex-direction: column;
-      justify-content: center;
-      gap: 35px;
-      transition: left 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+      align-items: center;
+      justify-content: flex-start;
+      gap: 20px;
+      padding: 0 20px; /* Zero vertical padding when collapsed */
+      border-bottom: 1px solid transparent;
+      transition: max-height 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), padding 0.4s ease, border-color 0.4s ease;
       z-index: 9999;
+      display: flex;
     }
     .nav-menu.active {
-      left: 0; /* Sliding transition output */
+      max-height: 320px; /* Slides down to wrap links nicely */
+      padding: 24px 20px;
+      border-bottom-color: var(--border-color);
     }
     .nav-link {
-      font-size: 1.1rem;
+      font-size: 1rem;
       letter-spacing: 2px;
     }
 
@@ -1544,7 +1554,8 @@
     const navMenu = document.getElementById('nav-menu');
     const navLinks = document.querySelectorAll('.nav-link');
 
-    hamburgerBtn.addEventListener('click', () => {
+    hamburgerBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
       hamburgerBtn.classList.toggle('active');
       navMenu.classList.toggle('active');
     });
@@ -1555,6 +1566,14 @@
         hamburgerBtn.classList.remove('active');
         navMenu.classList.remove('active');
       });
+    });
+
+    // Close mobile dropdown when tapping outside of header/menu
+    document.addEventListener('click', (e) => {
+      if (!navMenu.contains(e.target) && !hamburgerBtn.contains(e.target)) {
+        hamburgerBtn.classList.remove('active');
+        navMenu.classList.remove('active');
+      }
     });
 
     // Swap plan selector classes & local parameters
