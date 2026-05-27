@@ -25,6 +25,74 @@
     font-family: 'Montserrat', sans-serif;
     line-height: 1.6;
     overflow-x: hidden;
+    padding-top: 80px; /* Offset for fixed header */
+  }
+
+  /* --- FIXED NAVIGATION HEADER --- */
+  .site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 80px;
+    background: rgba(7, 7, 7, 0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border-color);
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+  }
+  .header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+  .brand-logo {
+    font-size: 1.5rem;
+    font-weight: 900;
+    text-decoration: none;
+    color: #fff;
+    letter-spacing: 0.5px;
+  }
+  .nav-menu {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    list-style: none;
+  }
+  .nav-link {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    transition: color 0.3s ease;
+  }
+  .nav-link:hover {
+    color: var(--primary);
+  }
+  
+  /* Mobile Hamburger Button Trigger */
+  .hamburger-btn {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 24px;
+    height: 18px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 10001;
+  }
+  .hamburger-btn span {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background-color: #fff;
+    transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
   }
 
   /* --- UTILITIES --- */
@@ -37,10 +105,15 @@
   .uppercase { text-transform: uppercase; }
   .bebas { font-family: 'Bebas Neue', sans-serif; }
   
+  /* --- SECTIONS (Offset scroll positions cleanly below navigation bar) --- */
+  section {
+    scroll-margin-top: 80px;
+  }
+
   /* --- HERO STORY SECTION (SPLIT SCREEN LAYOUT) --- */
   .hero-story {
     position: relative;
-    min-height: 100vh;
+    min-height: calc(100vh - 80px);
     display: flex;
     align-items: center;
     padding: 80px 0;
@@ -58,25 +131,26 @@
     width: 100%;
   }
   
-  /* --- SINGLE DIRECT PHOTO SHOWCASE (LEFT COLUMN) --- */
+  /* --- SINGLE DIRECT PHOTO SHOWCASE (LEFT COLUMN - NO MORE BOX!) --- */
   .single-photo-showcase {
     position: relative;
     width: 100%;
-    max-width: 540px;
-    margin-left: 0;
+    max-width: 540px; /* ENLARGED: Made significantly larger to dominate the left column */
+    margin-left: 0; /* Aligns strictly to the left column */
     margin-right: auto;
-    background: transparent;
-    border: none;
-    box-shadow: none;
-    border-radius: 0;
-    overflow: visible;
+    background: transparent; /* Transparent backdrop: No square box color! */
+    border: none; /* Stripped border line */
+    box-shadow: none; /* Stripped square box shadow */
+    border-radius: 0; /* Stripped rounded corner constraints */
+    overflow: visible; /* Ensures high-fidelity outline shadows render beautifully */
   }
   .single-photo-showcase img {
     width: 100%;
     height: auto;
-    max-height: 720px;
-    object-fit: contain;
+    max-height: 720px; /* ENLARGED: Height limit expanded from 580px to 720px */
+    object-fit: contain; /* Displays full photo beautifully without cropping */
     display: block;
+    /* Custom PNG physical drop shadow (Shadows your body contours instead of a square box!) */
     filter: drop-shadow(0 15px 35px rgba(247, 201, 72, 0.15)) drop-shadow(0 20px 45px rgba(0, 0, 0, 0.85));
     transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
   }
@@ -87,7 +161,7 @@
   /* --- TEXT CONTENT COLUMN (RIGHT COLUMN) --- */
   .hero-text-content {
     max-width: 580px;
-    margin-left: auto;
+    margin-left: auto; /* Aligns strictly to the right half of the container */
     margin-right: 0;
     position: relative;
     z-index: 3;
@@ -98,7 +172,7 @@
   .hero-text-content p,
   .hero-text-content span,
   .hero-text-content div {
-    text-align: left !important;
+    text-align: left !important; /* Explicitly forces left-alignment as requested */
   }
 
   .hero-text-content h1 {
@@ -127,7 +201,7 @@
     margin-bottom: 15px;
   }
 
-  /* --- BUTTONS & GLOW EFFECT --- */
+  /* --- BUTTONS, GLOW & MOVEMENT EFFECT --- */
   .btn-primary {
     background: var(--primary);
     color: #000;
@@ -144,18 +218,32 @@
     justify-content: center;
     gap: 10px;
     text-decoration: none;
-    box-shadow: 0 0 15px rgba(247, 201, 72, 0.3);
-    animation: glow-pulse 2.5s infinite;
+    transform-origin: center;
+    /* Smooth continuous breathing pulse and radiant gold glow animation */
+    animation: glow-pulse-breathing 2s infinite ease-in-out;
   }
   .btn-primary:hover {
     background: var(--primary-hover);
-    transform: translateY(-2px);
-    box-shadow: 0 0 25px rgba(255, 255, 255, 0.4);
+    /* High-contrast hover override */
+    animation: none;
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 10px 30px rgba(255, 255, 255, 0.5), 0 0 45px rgba(247, 201, 72, 0.8);
   }
-  @keyframes glow-pulse {
-    0% { box-shadow: 0 0 15px rgba(247, 201, 72, 0.3); }
-    50% { box-shadow: 0 0 30px rgba(247, 201, 72, 0.7); }
-    100% { box-shadow: 0 0 15px rgba(247, 201, 72, 0.3); }
+  
+  /* Amplified Glow + Smooth Breathing Motion Loop */
+  @keyframes glow-pulse-breathing {
+    0% { 
+      transform: scale(1);
+      box-shadow: 0 0 12px rgba(247, 201, 72, 0.3), 0 0 25px rgba(247, 201, 72, 0.1); 
+    }
+    50% { 
+      transform: scale(1.03); /* Subtle upward breathing scale motion */
+      box-shadow: 0 0 25px rgba(247, 201, 72, 0.8), 0 0 50px rgba(247, 201, 72, 0.4); 
+    }
+    100% { 
+      transform: scale(1);
+      box-shadow: 0 0 12px rgba(247, 201, 72, 0.3), 0 0 25px rgba(247, 201, 72, 0.1); 
+    }
   }
 
   /* --- MARKETING STATS --- */
@@ -185,16 +273,16 @@
     text-align: left !important;
   }
 
-  /* --- GENETICS SECTION --- */
+  /* --- NEW GENETICS MYTH BUSTER SECTION --- */
   .genetics-section {
-    padding: 100px 0;
+    padding: 70px 0;
     background: #090909;
     border-bottom: 1px solid var(--border-color);
     position: relative;
   }
   .genetics-grid {
     display: grid;
-    grid-template-columns: 0.9fr 1.1fr;
+    grid-template-columns: 0.9fr 1.1fr; /* Image on Left, Text on Right */
     gap: 60px;
     align-items: center;
   }
@@ -240,13 +328,13 @@
 
   /* --- PAIN POINTS SECTION --- */
   .pain-section {
-    padding: 80px 0;
+    padding: 70px 0;
     background: #0b0b0b;
     border-bottom: 1px solid var(--border-color);
   }
   .section-header {
     text-align: center;
-    margin-bottom: 50px;
+    margin-bottom: 40px;
   }
   .section-header h2 {
     font-size: 2.8rem;
@@ -303,15 +391,15 @@
 
   /* --- PHYSICAL TRANSFORMATION PROOF SECTION --- */
   .proof-section {
-    padding: 100px 0;
+    padding: 70px 0;
     background: #060606;
     border-bottom: 1px solid var(--border-color);
   }
   .proof-timeline-rows {
     display: flex;
     flex-direction: column;
-    gap: 100px;
-    margin-top: 60px;
+    gap: 60px; /* Reduced desktop card gaps */
+    margin-top: 50px;
   }
   .proof-row {
     display: grid;
@@ -381,7 +469,7 @@
 
   /* --- PROGRAM FEATURES & BLUEPRINT --- */
   .blueprint-section {
-    padding: 80px 0;
+    padding: 70px 0;
     background: var(--bg-dark);
     border-bottom: 1px solid var(--border-color);
   }
@@ -415,7 +503,7 @@
   /* --- CTA INTERSTITIAL BANNER --- */
   .cta-banner {
     background: linear-gradient(135deg, #18150f 0%, #0d0d0d 100%);
-    padding: 60px 0;
+    padding: 50px 0;
     text-align: center;
     border-bottom: 1px solid var(--border-color);
   }
@@ -548,7 +636,7 @@
     flex-shrink: 0;
   }
   
-  /* Check marks layout changed to vertically aligned row stack (as requested) */
+  /* Check marks layout vertically aligned row stack */
   .plan-features-mini {
     font-size: 0.8rem;
     color: var(--text-muted);
@@ -659,20 +747,34 @@
     border: 1px solid var(--border-color);
     padding: 24px;
   }
+  
+  /* receipt-row vertically stacks elements: label header is above, data is below */
   .receipt-row {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 14px 0;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 12px 0;
     border-bottom: 1px solid var(--border-color);
-    font-size: 0.85rem;
+    gap: 4px;
   }
   .receipt-row:last-child {
     border-bottom: none;
     padding-bottom: 0;
   }
-  .receipt-label { color: var(--text-muted); text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.5px; }
-  .receipt-val { color: #fff; font-weight: 700; text-align: right; }
+  .receipt-label { 
+    color: var(--text-muted); 
+    text-transform: uppercase; 
+    font-size: 0.72rem; 
+    letter-spacing: 1px;
+    font-weight: 600;
+  }
+  .receipt-val { 
+    color: #fff; 
+    font-weight: 700; 
+    text-align: left;
+    font-size: 1.05rem;
+    word-break: break-all;
+  }
   
   /* Exclusive GCash Payment Container */
   .payment-toggle-container {
@@ -703,12 +805,16 @@
     border-radius: 6px;
     border: 1px solid var(--border-color);
   }
+  
+  /* payment-info-row aligns vertically: label header is above, data is below */
   .payment-info-row {
-    font-size: 0.8rem;
+    font-size: 0.78rem;
     color: var(--text-muted);
-    margin-bottom: 8px;
+    margin-bottom: 12px;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
   }
   .payment-info-row:last-child {
     margin-bottom: 0;
@@ -716,6 +822,7 @@
   .payment-info-row span {
     color: #fff;
     font-weight: 700;
+    font-size: 1.05rem;
   }
 
   /* QR Code Container Styles */
@@ -741,9 +848,9 @@
     display: block;
   }
 
-  /* --- FOOTER & TRUST --- */
+  /* --- FOOTER --- */
   footer {
-    padding: 60px 0;
+    padding: 40px 0; /* Reduced footer padding */
     border-top: 1px solid var(--border-color);
     text-align: center;
     background: #050505;
@@ -752,23 +859,87 @@
     font-size: 0.8rem;
     color: var(--text-muted);
   }
+  
+  /* Footer social icons style */
+  .footer-socials {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 25px;
+    margin-bottom: 18px;
+  }
+  .footer-social-link {
+    color: var(--text-muted);
+    transition: color 0.3s ease, transform 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .footer-social-link:hover {
+    color: var(--primary);
+    transform: translateY(-3px);
+  }
 
   /* --- RESPONSIVENESS --- */
   @media(max-width: 900px) {
+    body {
+      padding-top: 70px; /* Tighter top bar height on mobile viewports */
+    }
+    .site-header {
+      height: 70px;
+    }
+    .hamburger-btn {
+      display: flex; /* Activate mobile dropdown triggers */
+    }
+    .nav-menu {
+      position: fixed;
+      top: 70px;
+      left: -100%;
+      width: 100%;
+      height: calc(100vh - 70px);
+      background: rgba(7, 7, 7, 0.98);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      flex-direction: column;
+      justify-content: center;
+      gap: 35px;
+      transition: left 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+      z-index: 9999;
+    }
+    .nav-menu.active {
+      left: 0; /* Sliding transition output */
+    }
+    .nav-link {
+      font-size: 1.1rem;
+      letter-spacing: 2px;
+    }
+
+    /* Active hamburger transformations */
+    .hamburger-btn.active span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+    .hamburger-btn.active span:nth-child(2) {
+      opacity: 0;
+    }
+    .hamburger-btn.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(6px, -7px);
+    }
+
     .comparison-grid, .blueprint-grid, .hero-grid {
       grid-template-columns: 1fr;
     }
     .genetics-grid {
       display: flex;
       flex-direction: column-reverse; /* Places text on top, photo on bottom on mobile */
-      gap: 40px;
+      gap: 30px; 
     }
     .proof-timeline-rows {
-      gap: 70px;
+      gap: 35px; /* Drastically reduced mobile layout card spacing */
+      margin-top: 30px;
     }
     .proof-row, .proof-row:nth-child(even) {
       grid-template-columns: 1fr;
-      gap: 30px;
+      gap: 20px; 
     }
     .proof-row:nth-child(even) .proof-img-side {
       grid-column: 1;
@@ -777,16 +948,38 @@
       grid-column: 1;
       grid-row: auto;
     }
-    .bp-card { padding: 30px; }
+    .bp-card { padding: 20px; } 
+    
+    /* Prevent excessive mobile empty vertical scrolling */
     .hero-story {
-      min-height: 100vh;
+      min-height: auto;
       display: flex;
       align-items: center;
-      padding: 60px 0;
+      padding: 45px 0; 
     }
+    .genetics-section {
+      padding: 45px 0; 
+    }
+    .pain-section {
+      padding: 45px 0; 
+    }
+    .proof-section {
+      padding: 45px 0; 
+    }
+    .blueprint-section {
+      padding: 45px 0; 
+    }
+    .cta-banner {
+      padding: 35px 0; 
+    }
+    
+    .section-header {
+      margin-bottom: 25px; 
+    }
+
     .hero-grid {
       grid-template-columns: 1fr;
-      gap: 30px;
+      gap: 25px;
     }
     .single-photo-showcase {
       margin: 0 auto;
@@ -801,6 +994,7 @@
     .stats-bar { 
       grid-template-columns: 1fr; 
       text-align: left;
+      margin-top: 20px;
     }
     .btn-primary { width: 100%; }
     .success-header-block { padding: 20px; }
@@ -817,7 +1011,7 @@
     }
   }
 
-  /* Mobile-specific plan card modifications (under 600px width) to avoid text-squeeze & alignment overlap */
+  /* Mobile-specific plan card layout (under 600px width) */
   @media(max-width: 600px) {
     .plan-row {
       display: grid !important;
@@ -848,14 +1042,47 @@
     .plan-title-row {
       flex-wrap: wrap !important;
       gap: 6px !important;
+      margin-bottom: 8px !important;
+    }
+    /* Moves price visual details cleanly */
+    .plan-features-mini {
+      margin-top: 12px !important;
     }
   }
 </style>
 </head>
 <body>
 
+  <!-- FIXED NAVIGATION HEADER -->
+  <header class="site-header">
+    <div class="container" style="width: 100%;">
+      <div class="header-container">
+        <!-- Brand identity -->
+        <a href="#transformation" class="brand-logo bebas">
+          JENNARD <span class="gold-text">COACHING</span>
+        </a>
+
+        <!-- Hamburger Button (Mobile viewports only) -->
+        <button class="hamburger-btn" id="hamburger-btn" aria-label="Toggle Navigation">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <!-- Main/Mobile sliding links -->
+        <ul class="nav-menu" id="nav-menu">
+          <li><a href="#transformation" class="nav-link">Transformation</a></li>
+          <li><a href="#genetics" class="nav-link">Genetics</a></li>
+          <li><a href="#comparison" class="nav-link">Plateaus</a></li>
+          <li><a href="#proof" class="nav-link">Proof</a></li>
+          <li><a href="#features" class="nav-link">Blueprint</a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
   <!-- HERO STORY SECTION (FULL SCREEN SPLIT CONTAINER) -->
-  <section class="hero-story">
+  <section id="transformation" class="hero-story">
     <div class="container">
       <div class="hero-grid">
         
@@ -901,7 +1128,7 @@
   </section>
 
   <!-- NEW GENETICS MYTH BUSTER SECTION -->
-  <section class="genetics-section">
+  <section id="genetics" class="genetics-section">
     <div class="container">
       <div class="genetics-grid">
         
@@ -927,7 +1154,7 @@
   </section>
 
   <!-- FRUSTRATIONS VS SOLUTIONS -->
-  <section class="pain-section">
+  <section id="comparison" class="pain-section">
     <div class="container">
       <div class="section-header">
         <h2 class="bebas uppercase">WHY MOST GYM-GOERS <span class="gold-text">PLATEAU</span></h2>
@@ -989,7 +1216,7 @@
   </section>
 
   <!-- REAL PHYSICAL PROOF COMPARISON (SCROLLABLE STACKED ROWS FORMAT) -->
-  <section class="proof-section">
+  <section id="proof" class="proof-section">
     <div class="container">
       <div class="section-header">
         <h2 class="bebas uppercase">REAL WORLD <span class="gold-text">DEVELOPMENT PROOF</span></h2>
@@ -1040,7 +1267,7 @@
   </section>
 
   <!-- PROGRAM BLUEPRINT & INCLUSIONS -->
-  <section class="blueprint-section">
+  <section id="features" class="blueprint-section">
     <div class="container">
       <div class="section-header">
         <h2 class="bebas uppercase">WHAT'S INCLUDED IN <span class="gold-text">YOUR COACHING SYSTEM</span></h2>
@@ -1193,7 +1420,8 @@
       <!-- STEP 3: CHECKOUT SUCCESS / INTERACTIVE RECEIPT DETAILS (STACKED VERTICALLY) -->
       <div class="checkout-success-container" id="checkout-success" style="display: none;">
         <div class="success-header-block">
-          <div class="urgency-badge uppercase" style="background:rgba(111, 207, 111, 0.1); border-color:#6fcf6f; color:#6fcf6f; margin-bottom:15px;">
+          <!-- Urgency Badge color updated to match golden booking details style instead of green -->
+          <div class="urgency-badge uppercase" style="background:rgba(247, 201, 72, 0.1); border-color:var(--primary); color:var(--primary); margin-bottom:15px;">
             ✓ Registration Recorded
           </div>
           <h2 class="bebas uppercase" style="font-size:3rem; line-height:1; letter-spacing: 0.5px;">YOUR CHOSEN SPOT IS HELD</h2>
@@ -1261,8 +1489,29 @@
   <!-- FOOTER -->
   <footer>
     <div class="container">
+      <!-- Premium SVGs Social Links -->
+      <div class="footer-socials">
+        <!-- Facebook -->
+        <a href="https://www.facebook.com/nardzkie.luyong" target="_blank" class="footer-social-link" aria-label="Facebook">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c4.56-.93 8-4.96 8-9.95z"/>
+          </svg>
+        </a>
+        <!-- Instagram -->
+        <a href="https://www.instagram.com/Jennard.l?fbclid=IwY2xjawSDEOlleHRuA2FlbQIxMABicmlkETFYOHZ4cndqVXlFZG51bkNIc3J0YwZhcHBfaWQQMjIyMDM5MTc4ODIwMDg5MgABHmRtsE24GZYBYDjihsAWFuRq3-r4ynQLCFUw-kxXj1JAn23gQh40xJNxO8B8_aem_Esd162G6cCIxYcrXXqA0SQ" target="_blank" class="footer-social-link" aria-label="Instagram">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+          </svg>
+        </a>
+        <!-- Gmail -->
+        <a href="mailto:jennardbussiness@gmail.com" class="footer-social-link" aria-label="Email">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+            <polyline points="22,6 12,13 2,6"></polyline>
+          </svg>
+        </a>
+      </div>
       <p style="margin-bottom:10px;">&copy; 2026 Jennard Coaching. All Rights Reserved.</p>
-      <p style="color:#555; font-size:0.75rem;">This fitness program contains tailored recommendations based on metabolic standards. Please consult a health professional before initiating major caloric deficit or macro alterations.</p>
     </div>
   </footer>
 
@@ -1282,9 +1531,28 @@
     let selectedPrice = "2000";
     let generatedOrderId = "";
 
+    // HAMBURGER AND MENU RESPONSIVE CONTROLLER
+    const hamburgerBtn = document.getElementById('hamburger-btn');
+    const navMenu = document.getElementById('nav-menu');
+    const navLinks = document.querySelectorAll('.nav-link');
+
+    hamburgerBtn.addEventListener('click', () => {
+      hamburgerBtn.classList.toggle('active');
+      navMenu.classList.toggle('active');
+    });
+
+    // Auto-close navigation drawer on mobile viewport select
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        hamburgerBtn.classList.remove('active');
+        navMenu.classList.remove('active');
+      });
+    });
+
     // Swap plan selector classes & local parameters
     const planRows = document.querySelectorAll('.plan-row');
     rowListeners();
+    // Re-attach core select event parameters
     function rowListeners() {
       planRows.forEach(row => {
         row.addEventListener('click', () => {
