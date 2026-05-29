@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Jennard Coaching — Elite Online Physique Transformation</title>
+<!-- Custom Favicon Link using your Brand Logo -->
+<link rel="icon" type="image/png" href="https://i.imgur.com/89vTSeV.png">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
   /* --- SYSTEM DESIGN TOKENS --- */
@@ -55,6 +57,14 @@
     text-decoration: none;
     color: #fff;
     letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .brand-logo img {
+    height: 45px;
+    width: auto;
+    object-fit: contain;
   }
   .nav-menu {
     display: flex;
@@ -857,15 +867,39 @@
     display: block;
   }
 
-  /* --- FOOTER --- */
+  /* --- FOOTER (REDESIGNED FOR BALANCED CENTERED ALIGNMENT) --- */
   footer {
-    padding: 40px 0; /* Reduced footer padding */
+    padding: 60px 0;
     border-top: 1px solid var(--border-color);
-    text-align: center;
     background: #050505;
+    text-align: center;
   }
-  footer p {
-    font-size: 0.8rem;
+  .footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+  }
+  .footer-logo-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+  .footer-logo-wrapper img {
+    height: 60px;
+    width: auto;
+    object-fit: contain;
+  }
+  .footer-brand-title {
+    font-size: 1.35rem;
+    font-weight: 900;
+    letter-spacing: 1px;
+    color: #fff;
+  }
+  .footer-copyright {
+    font-size: 0.75rem;
     color: var(--text-muted);
   }
   
@@ -875,7 +909,6 @@
     align-items: center;
     justify-content: center;
     gap: 25px;
-    margin-bottom: 18px;
   }
   .footer-social-link {
     color: var(--text-muted);
@@ -1062,10 +1095,6 @@
       flex-wrap: wrap !important;
       gap: 6px !important;
     }
-    /* Moves price visual details cleanly */
-    .plan-features-mini {
-      margin-top: 12px !important;
-    }
   }
 </style>
 </head>
@@ -1075,9 +1104,10 @@
   <header class="site-header">
     <div class="container" style="width: 100%;">
       <div class="header-container">
-        <!-- Brand identity -->
+        <!-- Brand identity (Now includes professional branding logo on the left) -->
         <a href="#transformation" class="brand-logo bebas">
-          JENNARD <span class="gold-text">COACHING</span>
+          <img src="https://i.imgur.com/89vTSeV.png" alt="Jennard Coaching Brand Logo">
+          <span>JENNARD <span class="gold-text">COACHING</span></span>
         </a>
 
         <!-- Hamburger Button (Mobile viewports only) -->
@@ -1504,32 +1534,42 @@
     </div>
   </div>
 
-  <!-- FOOTER -->
+  <!-- REDESIGNED CENTERED FOOTER -->
   <footer>
     <div class="container">
-      <!-- Premium SVGs Social Links -->
-      <div class="footer-socials">
-        <!-- Facebook -->
-        <a href="https://www.facebook.com/nardzkie.luyong" target="_blank" class="footer-social-link" aria-label="Facebook">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c4.56-.93 8-4.96 8-9.95z"/>
-          </svg>
-        </a>
-        <!-- Instagram -->
-        <a href="https://www.instagram.com/Jennard.l?fbclid=IwY2xjawSDEOlleHRuA2FlbQIxMABicmlkETFYOHZ4cndqVXlFZG51bkNIc3J0YwZhcHBfaWQQMjIyMDM5MTc4ODIwMDg5MgABHmRtsE24GZYBYDjihsAWFuRq3-r4ynQLCFUw-kxXj1JAn23gQh40xJNxO8B8_aem_Esd162G6cCIxYcrXXqA0SQ" target="_blank" class="footer-social-link" aria-label="Instagram">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
-          </svg>
-        </a>
-        <!-- Gmail -->
-        <a href="mailto:jennardbussiness@gmail.com" class="footer-social-link" aria-label="Email">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-            <polyline points="22,6 12,13 2,6"></polyline>
-          </svg>
-        </a>
+      <div class="footer-content">
+        <!-- Logo and Brand Header Stack -->
+        <div class="footer-logo-wrapper">
+          <img src="https://i.imgur.com/89vTSeV.png" alt="Jennard Coaching Brand Icon">
+          <h4 class="footer-brand-title bebas uppercase">JENNARD <span class="gold-text">COACHING</span></h4>
+        </div>
+
+        <!-- Aligned Center Social Connections -->
+        <div class="footer-socials">
+          <!-- Facebook -->
+          <a href="https://www.facebook.com/nardzkie.luyong" target="_blank" class="footer-social-link" aria-label="Facebook">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c4.56-.93 8-4.96 8-9.95z"/>
+            </svg>
+          </a>
+          <!-- Instagram -->
+          <a href="https://www.instagram.com/Jennard.l?fbclid=IwY2xjawSDEOlleHRuA2FlbQIxMABicmlkETFYOHZ4cndqVXlFZG51bkNIc3J0YwZhcHBfaWQQMjIyMDM5MTc4ODIwMDg5MgABHmRtsE24GZYBYDjihsAWFuRq3-r4ynQLCFUw-kxXj1JAn23gQh40xJNxO8B8_aem_Esd162G6cCIxYcrXXqA0SQ" target="_blank" class="footer-social-link" aria-label="Instagram">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+            </svg>
+          </a>
+          <!-- Gmail -->
+          <a href="mailto:jennardbussiness@gmail.com" class="footer-social-link" aria-label="Email">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+              <polyline points="22,6 12,13 2,6"></polyline>
+            </svg>
+          </a>
+        </div>
+
+        <!-- Copyright Line -->
+        <p class="footer-copyright">&copy; 2026 Jennard Coaching. All Rights Reserved.</p>
       </div>
-      <p style="margin-bottom:10px;">&copy; 2026 Jennard Coaching. All Rights Reserved.</p>
     </div>
   </footer>
 
